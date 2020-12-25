@@ -93,9 +93,25 @@ class UserInterface:
         self.plot1.axis([0,int(len(dataSet)),int(min(dataSet)),int(max(dataSet)*1.2)])
         
         ## labeling the graph
-        for x, y in zip([i for i in range(len(dataSet))], dataSet):
-            label = y
-            self.plot1.annotate(label, (x,y), textcoords = "offset points", xytext = (0,10), ha='center')
+        if len(dataSet) > 10:
+            for x, y in zip([i for i in range(len(dataSet))], dataSet):
+                label = "$" + format(y, '.2f')
+                if x % 2 == 0:
+                    if x == 0:
+                        continue
+                    else:
+                        self.plot1.annotate(label, (x,y), textcoords = "offset points", xytext = (0,10), ha='center')
+                                      
+                elif x == max(([i for i in range(len(dataSet))])):
+                    self.plot1.annotate(label, (x,y), textcoords = "offset points", xytext = (0,10), ha='center')               
+
+        elif len(dataSet) <= 10:    
+            for x, y in zip([i for i in range(len(dataSet))], dataSet):
+                if x == 0:
+                    continue
+                else:
+                    label = "$" + format(y, '.2f')             
+                    self.plot1.annotate(label, (x,y), textcoords = "offset points", xytext = (0,10), ha='center')
         
         # making sure the layout is tight
         self.figure.tight_layout()
